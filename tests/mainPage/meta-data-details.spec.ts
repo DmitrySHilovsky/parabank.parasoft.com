@@ -11,6 +11,7 @@ test.describe(`Metadata details on main page`, async () => {
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
     mainPage = new MainPage(page);
+
     await mainPage.visitPage();
   });
 
@@ -18,9 +19,5 @@ test.describe(`Metadata details on main page`, async () => {
     const title = await mainPage.getTitle();
 
     expect(title).toBe("ParaBank | Welcome | Online Banking");
-
-    await mainPage.Header.RightSideNavigation.clickButton("home");
-    await mainPage.Header.LeftSideNavigation.clickButton("Admin Page");
-    await mainPage.Header.LeftSideNavigation.clickButton("About Us");
   });
 });

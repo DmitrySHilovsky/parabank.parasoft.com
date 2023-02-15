@@ -3,9 +3,10 @@
 node_modules/
 
 playwright-report/
+config/reports
 reports/
-/test-results/
-/playwright/.cache/
+test-results/
+playwright/.cache/
 
 
 
