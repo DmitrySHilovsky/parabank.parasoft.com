@@ -1,5 +1,12 @@
+.idea/
+
 node_modules/
+
+playwright-report/
+reports/
 /test-results/
 /playwright/.cache/
-reports/
+
+
+
 
