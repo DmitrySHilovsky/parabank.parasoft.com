@@ -1,7 +1,6 @@
 import { Page } from "@playwright/test";
 import { Header } from "../shared/header/header";
 import { Login } from "../shared/login/login";
-import { RegistrationPage } from "./registration-page";
 
 const BASE_URL = "https://parabank.parasoft.com/parabank/index.htm";
 

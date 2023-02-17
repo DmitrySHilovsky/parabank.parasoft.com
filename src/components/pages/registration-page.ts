@@ -1,17 +1,34 @@
 import { BasePage } from "./base";
 import { Page } from "@playwright/test";
+import { forEachSeries } from "p-iteration";
 
-type TypeButton =
-  | "firstName"
-  | "lastName"
-  | "address.street"
-  | "address.city"
-  | "address.state"
-  | "address.zipCode"
-  | "phoneNumber"
-  | "ssn"
-  | "username"
-  | "password";
+// Названия атрибутов для локатор (xpath)
+const objectAtributeNaimen = {
+  firstName: "firstName",
+  lastName: "lastName",
+  street: "address.street",
+  city: "address.city",
+  state: "address.state",
+  zipCode: "address.zipCode",
+  phoneNumber: "phoneNumber",
+  ssn: "ssn",
+  username: "username",
+  password: "password",
+};
+
+// Тестовые данные для регистрации
+const objectfillFormValues = {
+  firstName: "Ivan",
+  lastName: "Dzenev",
+  street: "Mira st. 132-105",
+  city: "Moscow",
+  state: "RussiaMother",
+  zipCode: "784632575",
+  phoneNumber: "8-800-555-35-35",
+  ssn: "784254927",
+  username: "testability",
+  password: "Limanv12",
+};
 
 export class RegistrationPage extends BasePage {
   constructor(page: Page) {
@@ -20,26 +37,26 @@ export class RegistrationPage extends BasePage {
 
   // Локаторы
   private LOCATORS = {
-    input: (attributeName: TypeButton) =>
+    input: (attributeName: string) =>
       this.page.locator(`//input[@id="customer.${attributeName}"]`), // Локаторы полей в форме регистрации
     inputPasswordRepeat: this.page.locator(`//input[@id="repeatedPassword"]`),
     registerButton: this.page.locator(`//input[@value="Register"]`), // Локатор кнопки регистрации
   };
 
   // Заполнение полей в форме регистрации
-  // функция хелпер в которую передаём локатор и значение для заполнения, локаторы хранятся в обьекте, обьект перебирается forIn,
+  // функция хелпер в которую передаём локатор и значение для заполнения, локаторы хранятся в обьекте, обьект перебирается forEachSeries,
   public async fillForm() {
-    await this.LOCATORS.input("firstName").fill("testability");
-    await this.LOCATORS.input("lastName").fill("Limanv12");
-    await this.LOCATORS.input("address.street").fill("testability");
-    await this.LOCATORS.input("address.city").fill("testability");
-    await this.LOCATORS.input("address.state").fill("testability");
-    await this.LOCATORS.input("address.zipCode").fill("testability");
-    await this.LOCATORS.input("phoneNumber").fill("testability");
-    await this.LOCATORS.input("ssn").fill("testability");
-    await this.LOCATORS.input("username").fill("testability");
-    await this.LOCATORS.input("password").fill("Limanv12");
+    const attributeNameValues = Object.values(objectAtributeNaimen); // переводим обьект в массив значений имен атрибутов
+    const fillFormValues = Object.values(objectfillFormValues); // переводим обьект в массив значений имен атрибутов
+
+    await forEachSeries (attributeNameValues, async (element, index) => {
+      await this.LOCATORS.input(element).fill(fillFormValues[index]);
+      })
     await this.LOCATORS.inputPasswordRepeat.fill("Limanv12");
+  }
+
+  public async fillFormEmpty() {
+    
   }
 
   public async clickRegistrationButton(): Promise<void> {
@@ -49,19 +66,3 @@ export class RegistrationPage extends BasePage {
     ]);
   }
 }
-
-// public fillForm = createFormFiller({
-//   firstname: [this.LOCATORS.input('firstname'), 'Mark'],
-//   lastname: [this.LOCATORS.input('lastName'), 'Smith'],
-//   addressStreet: [this.LOCATORS.input('address.street'), '1 Main St'],
-//   addressCity: [this.LOCATORS.input('address.city'), 'New York'],
-//   addressState: [this.LOCATORS.input('address.state'), 'NY'],
-//   addressZipCode: [this.LOCATORS.input('address.zipCode'), '10001'],
-//   phoneNumber: [this.LOCATORS.input('phoneNumber'), '212 555-1234'],
-//   ssn: [this.LOCATORS.input('ssn'), '111-11-1111'],
-//   username: [this.LOCATORS.input('username'), 'testability'],
-//   password: [this.LOCATORS.input('password'), 'Limanv12'],
-//   passwordRepeat: [this.LOCATORS.inputPasswordRepeat, 'Limanv12'],
-// });
-
-// export declare function createFormFiller<T extends Record<string, [OptimaxLocator, string]>>(fields: T): (values?: Partial<Record<keyof T, string>>) => Promise<void>;
