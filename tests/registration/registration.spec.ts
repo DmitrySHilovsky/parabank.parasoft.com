@@ -19,6 +19,8 @@ test.describe.only(`Testing the entry positive and negative scenario`, async () 
   test("Create new User", async () => {
     await registrationPage.fillForm();
     await registrationPage.clickRegistrationButton();
+    // ЗАДАЧА проверяем, что на странице отображается сообщение об успешной регистрации
+    await expect(registrationPage.getSuccessMessage()).toBeVisible();
   });
 
   // ЗАДАЧА Оставить поля пустыми и кликнуть на кнопку регистрация, убедится что выдало ошибки и пользователь не зарегистрирован
