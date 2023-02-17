@@ -2,6 +2,7 @@ import { BasePage } from "./base";
 import { Page } from "@playwright/test";
 import { forEachSeries } from "p-iteration";
 
+// ??? может быть перенести в отдельный файл названия атрибутов и тест данные?
 // Названия атрибутов для локатор (xpath)
 const objectAtributeNaimen = {
   firstName: "firstName",
@@ -41,8 +42,10 @@ export class RegistrationPage extends BasePage {
       this.page.locator(`//input[@id="customer.${attributeName}"]`), // Локаторы полей в форме регистрации
     inputPasswordRepeat: this.page.locator(`//input[@id="repeatedPassword"]`),
     registerButton: this.page.locator(`//input[@value="Register"]`), // Локатор кнопки регистрации
+    SuccessMessage: this.page.locator(`?????????????????`), // Локатор сообщения об успешной регистрации
   };
 
+  // ЗАДАНИЕ перенести в отдельный файл
   // Заполнение полей в форме регистрации
   // функция хелпер в которую передаём локатор и значение для заполнения, локаторы хранятся в обьекте, обьект перебирается forEachSeries,
   public async fillForm() {

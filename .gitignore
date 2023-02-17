@@ -1,13 +1,13 @@
 .idea/
+.vs/
 
 node_modules/
 
 playwright-report/
-config/reports
+config/reports/
 reports/
 test-results/
 playwright/.cache/
-
 
 
 

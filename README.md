@@ -1,13 +1,12 @@
 ### TODO:
 
-- Вынести все репорты и тест резалты в директорию репортс
-- Поправить конфиги
-- Задание в тесте регистрация
-- Задание в тесте логин
-- Отрефакторить импорты: библиотеки - большие компонеты - зависимые компоненты - типы - сортировка в одном типе по алфавиту
-- Задание в рестрация пэйдж
-- Вынести в константы ссылки на страницы
-- Поправить xpath в шапуле
-- Добавить тест кейс для отправки денег между счетами 
-
-- Удалить коменты и все ненужные файлы
+- Move all reports and test results to the reports directory
+- Fix configs
+- Task in the registration test
+- Task in the login test
+- Refactor imports: libraries - large components - dependent components - types - sorting in one type alphabetically
+- Restoration page task
+- Move links to pages into constants
+- Correct xpath in shapool
+- Add a test case to send money between accounts
+- Delete comments and all unnecessary files
