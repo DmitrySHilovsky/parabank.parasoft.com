@@ -9,3 +9,4 @@
 - Move links to pages into constants
 - Add a test case to send money between accounts
 - Delete comments and all unnecessary files
+- Add .vs and .idea in gitignore and remove them from git history
