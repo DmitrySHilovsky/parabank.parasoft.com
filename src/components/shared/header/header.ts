@@ -8,8 +8,8 @@ export class Header {
   }
 
   private LOCATORS = {
-    logoAdmin : this.page.locator('//img[@src="/parabank/images/logo.gif"]'),         ///????????????
-    logoCompany : this.page.locator('//*[@id="topPanel"]/a[2]/img'),       ///????????????
+    logoAdmin : this.page.locator('//img[@class="admin"]'),     
+    logoCompany : this.page.locator('//img[@class="logo"]'),    
     tagline : this.page.locator('//p[text()="Experience the difference"]')
   };
 
@@ -22,5 +22,5 @@ export class Header {
 
   public async clickLogoCompany(): Promise<void> {
     await this.LOCATORS.logoCompany.click();
-  }цн
+  }
 }
