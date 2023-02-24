@@ -22,5 +22,5 @@ export class Header {
 
   public async clickLogoCompany(): Promise<void> {
     await this.LOCATORS.logoCompany.click();
-  }цн
+  }
 }

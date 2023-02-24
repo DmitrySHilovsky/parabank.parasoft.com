@@ -7,9 +7,9 @@
     "@playwright/test": "^1.30.0"
   },
   "scripts": {
-    "test": "playwright test --headed --config=./config/playwright.config.ts",
-    "test:debug": "playwright test --headed --debug --config=./config/playwright.config.ts",
-    "test:daemon": "playwright test --config=./config/playwright.config.ts"
+    "test": "playwright test --headed --config=config/playwright.config.ts",
+    "test:debug": "playwright test --headed --debug --config=config/playwright.config.ts",
+    "test:daemon": "playwright test --config=config/playwright.config.ts"
   },
   "dependencies": {
     "p-iteration": "^1.1.8"
