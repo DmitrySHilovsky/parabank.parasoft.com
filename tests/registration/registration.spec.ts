@@ -1,5 +1,6 @@
 import test, { expect, Page } from "@playwright/test";
 import { RegistrationPage } from "../../src/components/pages/registration-page";
+import { timeout } from "../../src/support/utils";
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -16,14 +17,15 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
     await registrationPage.visitPage();
   });
 
-  test("Create new User", async () => {
+  test.only("Create new User", async () => {
     await registrationPage.fillForm();
     await registrationPage.clickRegistrationButton();
-    // ЗАДАЧА проверяем, что на странице отображается сообщение об успешной регистрации
-    await expect(registrationPage.getSuccessMessage()).toBeVisible();
+
+    expect(await registrationPage.getSuccessMessage()).
+    toBe('Your account was created successfully. You are now logged in.');
+   //expect(); ///?????????????
   });
 
-  // ЗАДАЧА Оставить поля пустыми и кликнуть на кнопку регистрация, убедится что выдало ошибки и пользователь не зарегистрирован
   test("Create new User for empty Data", async () => {
     await registrationPage.clickRegistrationButton();
   })

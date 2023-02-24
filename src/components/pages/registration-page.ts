@@ -1,61 +1,41 @@
 import { BasePage } from "./base";
 import { Page } from "@playwright/test";
 import { forEachSeries } from "p-iteration";
+import { faker } from "@faker-js/faker"
 
-// ??? может быть перенести в отдельный файл названия атрибутов и тест данные?
-// Названия атрибутов для локатор (xpath)
-const objectAtributeNaimen = {
-  firstName: "firstName",
-  lastName: "lastName",
-  street: "address.street",
-  city: "address.city",
-  state: "address.state",
-  zipCode: "address.zipCode",
-  phoneNumber: "phoneNumber",
-  ssn: "ssn",
-  username: "username",
-  password: "password",
-};
-
-// Тестовые данные для регистрации
-const objectfillFormValues = {
-  firstName: "Ivan",
-  lastName: "Dzenev",
-  street: "Mira st. 132-105",
-  city: "Moscow",
-  state: "RussiaMother",
-  zipCode: "784632575",
-  phoneNumber: "8-800-555-35-35",
-  ssn: "784254927",
-  username: "testability",
-  password: "Limanv12",
-};
+const correctRegistrationData = [
+  { locator: "firstName",       value: faker.name.firstName() },
+  { locator: "lastName",        value: faker.name.lastName() },
+  { locator: "address.street",  value: faker.address.streetAddress() },
+  { locator: "address.city",    value: faker.address.cityName() },
+  { locator: "address.state",   value: faker.address.state() },
+  { locator: "address.zipCode", value: faker.address.zipCode() },
+  { locator: "phoneNumber",     value: faker.phone.number() },
+  { locator: "ssn",             value: faker.random.numeric(8) },
+  { locator: "username",        value: faker.internet.userName() },
+  { locator: "password",        value: faker.internet.password() },
+]
 
 export class RegistrationPage extends BasePage {
   constructor(page: Page) {
     super(page, "https://parabank.parasoft.com/parabank/register.htm");
   }
 
-  // Локаторы
   private LOCATORS = {
     input: (attributeName: string) =>
-      this.page.locator(`//input[@id="customer.${attributeName}"]`), // Локаторы полей в форме регистрации
+      this.page.locator(`//input[@id="customer.${attributeName}"]`), 
     inputPasswordRepeat: this.page.locator(`//input[@id="repeatedPassword"]`),
-    registerButton: this.page.locator(`//input[@value="Register"]`), // Локатор кнопки регистрации
-    SuccessMessage: this.page.locator(`?????????????????`), // Локатор сообщения об успешной регистрации
+    registerButton: this.page.locator(`//input[@value="Register"]`), 
+    successMessage: this.page.locator(`//p[text()='Your account was created successfully. You are now logged in.']`), 
   };
 
-  // ЗАДАНИЕ перенести в отдельный файл
-  // Заполнение полей в форме регистрации
-  // функция хелпер в которую передаём локатор и значение для заполнения, локаторы хранятся в обьекте, обьект перебирается forEachSeries,
   public async fillForm() {
-    const attributeNameValues = Object.values(objectAtributeNaimen); // переводим обьект в массив значений имен атрибутов
-    const fillFormValues = Object.values(objectfillFormValues); // переводим обьект в массив значений имен атрибутов
+    await forEachSeries (correctRegistrationData, async (element, index) => {
+      await this.LOCATORS.input(element.locator).fill(element.value);
+    });
 
-    await forEachSeries (attributeNameValues, async (element, index) => {
-      await this.LOCATORS.input(element).fill(fillFormValues[index]);
-      })
-    await this.LOCATORS.inputPasswordRepeat.fill("Limanv12");
+    const index = correctRegistrationData.findIndex(item => item.locator === "password");
+    await this.LOCATORS.inputPasswordRepeat.fill(correctRegistrationData[index].value); 
   }
 
   public async clickRegistrationButton(): Promise<void> {
@@ -63,5 +43,9 @@ export class RegistrationPage extends BasePage {
       this.LOCATORS.registerButton.click(),
       this.page.waitForLoadState("networkidle"),
     ]);
+  }
+
+  public async getSuccessMessage():Promise<string> {
+    return (await this.LOCATORS.successMessage.innerText()).trim();
   }
 }
