@@ -1,20 +1,7 @@
-import { BasePage } from "./base";
 import { Page } from "@playwright/test";
+import { BasePage } from "./base";
 import { forEachSeries } from "p-iteration";
-import { faker } from "@faker-js/faker"
-
-const correctRegistrationData = [
-  { locator: "firstName",       value: faker.name.firstName() },
-  { locator: "lastName",        value: faker.name.lastName() },
-  { locator: "address.street",  value: faker.address.streetAddress() },
-  { locator: "address.city",    value: faker.address.cityName() },
-  { locator: "address.state",   value: faker.address.state() },
-  { locator: "address.zipCode", value: faker.address.zipCode() },
-  { locator: "phoneNumber",     value: faker.phone.number() },
-  { locator: "ssn",             value: faker.random.numeric(8) },
-  { locator: "username",        value: faker.internet.userName() },
-  { locator: "password",        value: faker.internet.password() },
-]
+import { faker } from "@faker-js/faker";
 
 export class RegistrationPage extends BasePage {
   constructor(page: Page) {
@@ -23,19 +10,41 @@ export class RegistrationPage extends BasePage {
 
   private LOCATORS = {
     input: (attributeName: string) =>
-      this.page.locator(`//input[@id="customer.${attributeName}"]`), 
+      this.page.locator(`//input[@id="customer.${attributeName}"]`),
     inputPasswordRepeat: this.page.locator(`//input[@id="repeatedPassword"]`),
-    registerButton: this.page.locator(`//input[@value="Register"]`), 
-    successMessage: this.page.locator(`//p[text()='Your account was created successfully. You are now logged in.']`), 
+    registerButton: this.page.locator(`//input[@value="Register"]`),
+    successMessage: this.page.locator(
+      `//p[text()='Your account was created successfully. You are now logged in.']`
+    ),
+    welcomeMessageLogin: this.page.locator('//h1[contains(text(),"Welcome")]'),
   };
 
+  private userLogin: string = faker.internet.userName();
+
+  private correctRegistrationData = [
+    { locator: "firstName", value: faker.name.firstName() },
+    { locator: "lastName", value: faker.name.lastName() },
+    { locator: "address.street", value: faker.address.streetAddress() },
+    { locator: "address.city", value: faker.address.cityName() },
+    { locator: "address.state", value: faker.address.state() },
+    { locator: "address.zipCode", value: faker.address.zipCode() },
+    { locator: "phoneNumber", value: faker.phone.number('###-###-####') },
+    { locator: "ssn", value: faker.random.numeric(8) },
+    { locator: "username", value: this.userLogin },
+    { locator: "password", value: faker.internet.password() },
+  ];
+
   public async fillForm() {
-    await forEachSeries (correctRegistrationData, async (element, index) => {
+    await forEachSeries(this.correctRegistrationData, async (element) => {
       await this.LOCATORS.input(element.locator).fill(element.value);
     });
 
-    const index = correctRegistrationData.findIndex(item => item.locator === "password");
-    await this.LOCATORS.inputPasswordRepeat.fill(correctRegistrationData[index].value); 
+    const index = this.correctRegistrationData.findIndex(
+      (item) => item.locator === "password"
+    );
+    await this.LOCATORS.inputPasswordRepeat.fill(
+      this.correctRegistrationData[index].value
+    );
   }
 
   public async clickRegistrationButton(): Promise<void> {
@@ -45,7 +54,17 @@ export class RegistrationPage extends BasePage {
     ]);
   }
 
-  public async getSuccessMessage():Promise<string> {
+  public async getSuccessMessage(): Promise<string> {
     return (await this.LOCATORS.successMessage.innerText()).trim();
+  }
+
+  public async getLoginFromWelcomeMessage(): Promise<string | undefined> {
+    return (await this.LOCATORS.welcomeMessageLogin.innerText())
+      .split(" ")
+      .pop();
+  }
+
+  public getUserLogin(): string {
+    return this.userLogin;
   }
 }

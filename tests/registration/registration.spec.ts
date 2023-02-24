@@ -23,7 +23,9 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
 
     expect(await registrationPage.getSuccessMessage()).
     toBe('Your account was created successfully. You are now logged in.');
-   //expect(); ///?????????????
+   
+    expect(await registrationPage.getUserLogin()).
+    toBe(await registrationPage.getLoginFromWelcomeMessage());
   });
 
   test("Create new User for empty Data", async () => {
