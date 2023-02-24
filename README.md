@@ -1,6 +1,5 @@
 ### TODO:
 
-- Fix configs
 - Task in the registration test
 - Task in the login test
 - Refactor imports: libraries - large components - dependent components - types - sorting in one type alphabetically
