@@ -11,7 +11,7 @@ export class Header {
     logoAdmin : this.page.locator('//img[@class="admin"]'),     
     logoCompany : this.page.locator('//img[@class="logo"]'),    
     tagline : this.page.locator('//p[text()="Experience the difference"]')
-  };
+  }
 
   RightSideNavigation = new RightSideNavigation(this.page);
   LeftSideNavigation = new LeftSideNavigation(this.page);

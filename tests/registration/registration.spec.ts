@@ -6,7 +6,7 @@ test.use({ viewport: { width: 1920, height: 1080 } });
 // Тесты связанные с регистрацией юзера
 // Позитивные: валидные данные для рестрации
 // Негативные: оставить форму пустой, невалидные данные для рестрации(спецзнаки в логине?, микропароль?) 
-test.describe.only(`Testing the entry positive and negative scenario`, async () => {
+test.describe(`Testing the entry positive and negative scenario`, async () => {
   let registrationPage: RegistrationPage;
 
   test.beforeAll(async ({ browser }) => {
@@ -28,3 +28,7 @@ test.describe.only(`Testing the entry positive and negative scenario`, async () 
     await registrationPage.clickRegistrationButton();
   })
 });
+
+
+
+

@@ -35,7 +35,7 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
     // ЗАДАЧА Проверяем что пользователь разлогинивается
   });
   // ЗАДАЧА Разделить на два кейса неправильный логин и неправильный пас
-  test("Login with not valid credentials", async () => { 
+  test("Login with incorrect login and correct password", async () => { 
     await login.fillFormNotValid();
     await login.clickButtonLogIn();
 

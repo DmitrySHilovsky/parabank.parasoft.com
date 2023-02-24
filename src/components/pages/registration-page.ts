@@ -58,10 +58,6 @@ export class RegistrationPage extends BasePage {
     await this.LOCATORS.inputPasswordRepeat.fill("Limanv12");
   }
 
-  public async fillFormEmpty() {
-    
-  }
-
   public async clickRegistrationButton(): Promise<void> {
     await Promise.all([
       this.LOCATORS.registerButton.click(),
