@@ -1,6 +1,5 @@
 ### TODO:
 
-- Move all reports and test results to the reports directory
 - Fix configs
 - Task in the registration test
 - Task in the login test
