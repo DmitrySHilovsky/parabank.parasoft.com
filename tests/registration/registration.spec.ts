@@ -3,9 +3,6 @@ import { RegistrationPage } from "../../src/components/pages/registration-page";
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
-// Тесты связанные с регистрацией юзера
-// Позитивные: валидные данные для рестрации
-// Негативные: оставить форму пустой, невалидные данные для рестрации(спецзнаки в логине?, микропароль?) 
 test.describe(`Testing the entry positive and negative scenario`, async () => {
   let registrationPage: RegistrationPage;
 
@@ -19,16 +16,17 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
   test("Create new User", async () => {
     await registrationPage.fillForm();
     await registrationPage.clickRegistrationButton();
-    // ЗАДАЧА проверяем, что на странице отображается сообщение об успешной регистрации
-    await expect(registrationPage.getSuccessMessage()).toBeVisible();
+
+    expect(await registrationPage.getSuccessMessage()).toBe(
+      "Your account was created successfully. You are now logged in."
+    );
+
+    expect(registrationPage.getUserLogin()).toBe(
+      await registrationPage.getLoginFromWelcomeMessage()
+    );
   });
 
-  // ЗАДАЧА Оставить поля пустыми и кликнуть на кнопку регистрация, убедится что выдало ошибки и пользователь не зарегистрирован
   test("Create new User for empty Data", async () => {
     await registrationPage.clickRegistrationButton();
-  })
+  });
 });
-
-
-
-
