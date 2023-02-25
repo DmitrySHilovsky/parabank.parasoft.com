@@ -7,7 +7,7 @@ const BASE_URL = "https://parabank.parasoft.com/parabank/index.htm";
 export abstract class BasePage {
   currentURL: string;
 
-  protected constructor(readonly page: Page, currentURL:string=BASE_URL) {
+  protected constructor(readonly page: Page, currentURL: string = BASE_URL) {
     this.page = page;
     this.currentURL = currentURL;
   }
@@ -25,6 +25,6 @@ export abstract class BasePage {
   }
 
   public async getUrl(): Promise<string> {
-    return await this.page.url();
+    return this.page.url();
   }
 }

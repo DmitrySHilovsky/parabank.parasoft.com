@@ -1,8 +1,3 @@
-import { BasePage } from "./base";
-import { Page } from "@playwright/test";
+import { Container } from "../pom/container/container";
 
-export class MainPage extends BasePage {
-    constructor(page: Page) {
-        super(page);
-    }
-}
+export class MainPage extends Container {}
