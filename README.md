@@ -9,8 +9,7 @@
 - Add .vs and .idea in gitignore and remove them from git history
 
 #### TESTS:
-- Task in the registration test: 
-    - Create new User 
+- Task in the registration test:  
     - Create new User with empty Data
     - Create new User with invalid (empty) login
     - Create new User with invalid (empty) password
