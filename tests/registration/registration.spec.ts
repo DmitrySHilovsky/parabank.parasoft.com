@@ -17,7 +17,7 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
     await registrationPage.visitPage();
   });
 
-  test.only("Create new User", async () => {
+  test("Create new User", async () => {
     await registrationPage.fillForm();
     await registrationPage.clickRegistrationButton();
 
