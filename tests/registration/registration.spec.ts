@@ -14,7 +14,7 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
   });
 
   test("Create new User", async () => {
-    await registrationPage.fillForm();
+    await registrationPage.fillFormWithValidData();
     await registrationPage.clickRegistrationButton();
 
     expect(await registrationPage.getSuccessMessage()).toBe(
@@ -28,5 +28,6 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
 
   test("Create new User for empty Data", async () => {
     await registrationPage.clickRegistrationButton();
+    await registrationPage.checkErrorText();
   });
 });
