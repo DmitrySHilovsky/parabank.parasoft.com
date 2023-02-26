@@ -1,9 +1,8 @@
 import { BasePage } from '../../pages/base';
 
 export class Container extends BasePage {
-    constructor(readonly page, readonly currentURL = '') {
+    constructor(readonly page, currentURL?: string) {
         super(page, currentURL);
-
-        this.currentURL = currentURL;
+        currentURL = this.currentURL;
     }
 }

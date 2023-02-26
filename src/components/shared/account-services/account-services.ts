@@ -1,4 +1,3 @@
-// ?? Нейминг и локализация
 import { Page } from "@playwright/test";
 
 // Названия кнопок - необходимо для Xpath
