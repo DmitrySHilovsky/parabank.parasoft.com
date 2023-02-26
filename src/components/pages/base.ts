@@ -7,17 +7,20 @@ const BASE_URL = "https://parabank.parasoft.com/parabank/index.htm";
 export abstract class BasePage {
   currentURL: string;
 
-  protected constructor(readonly page: Page, currentURL:string=BASE_URL) {
+  protected constructor(readonly page: Page, currentURL?: string) {
     this.page = page;
-    this.currentURL = currentURL;
+    this.currentURL = currentURL ?? BASE_URL;
   }
 
-  Header = new Header(this.page); 
-  login = new Login(this.page);
+  private LOCATORS = {
+    containerHeader: this.page.locator('//div[@id="mainPanel"]'),
+  }
 
-  public async visitPage(link = this.currentURL): Promise<void> {
-    link = this.currentURL;
-    await this.page.goto(link);
+  Header = new Header(this.LOCATORS.containerHeader, this.page);
+  Login = new Login(this.page);
+
+  public async visitPage(link?: string): Promise<void> {
+    await this.page.goto(link ?? this.currentURL);
   }
 
   public async getTitle(): Promise<string> {
@@ -25,6 +28,6 @@ export abstract class BasePage {
   }
 
   public async getUrl(): Promise<string> {
-    return await this.page.url();
+    return this.page.url();
   }
 }

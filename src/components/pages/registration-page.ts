@@ -2,8 +2,9 @@ import { Page } from "@playwright/test";
 import { BasePage } from "./base";
 import { forEachSeries } from "p-iteration";
 import { faker } from "@faker-js/faker";
+import {Container} from "../pom/container/container";
 
-export class RegistrationPage extends BasePage {
+export class RegistrationPage extends Container {
   constructor(page: Page) {
     super(page, "https://parabank.parasoft.com/parabank/register.htm");
   }
