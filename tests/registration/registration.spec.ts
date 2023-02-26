@@ -16,6 +16,7 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
   test("Create new User", async () => {
     await registrationPage.fillForm();
     await registrationPage.clickRegistrationButton();
+    registrationPage.saveUserData();
 
     expect(await registrationPage.getSuccessMessage()).toBe(
       "Your account was created successfully. You are now logged in."

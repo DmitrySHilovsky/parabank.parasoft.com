@@ -2,8 +2,9 @@ import { Page } from "@playwright/test";
 import { BasePage } from "./base";
 import { forEachSeries } from "p-iteration";
 import { faker } from "@faker-js/faker";
+import { Container } from "../pom/container/container";
 
-export class RegistrationPage extends BasePage {
+export class RegistrationPage extends Container {
   constructor(page: Page) {
     super(page, "https://parabank.parasoft.com/parabank/register.htm");
   }
@@ -20,6 +21,7 @@ export class RegistrationPage extends BasePage {
   };
 
   private userLogin: string = faker.internet.userName();
+  private userPassword: string = faker.internet.password();
 
   private correctRegistrationData = [
     { locator: "firstName", value: faker.name.firstName() },
@@ -31,7 +33,7 @@ export class RegistrationPage extends BasePage {
     { locator: "phoneNumber", value: faker.phone.number('###-###-####') },
     { locator: "ssn", value: faker.random.numeric(8) },
     { locator: "username", value: this.userLogin },
-    { locator: "password", value: faker.internet.password() },
+    { locator: "password", value: this.userPassword },
   ];
 
   public async fillForm() {
@@ -66,5 +68,14 @@ export class RegistrationPage extends BasePage {
 
   public getUserLogin(): string {
     return this.userLogin;
+  }
+
+  // Сохранение данных в файл json
+  public saveUserData() {
+    const fs = require('fs');
+    let name = this.userLogin;
+    let password = this.userPassword;
+    let data = { name, password };
+    fs.writeFileSync('data.json', JSON.stringify(data));
   }
 }

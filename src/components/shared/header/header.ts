@@ -1,16 +1,13 @@
-import type { Page } from "@playwright/test";
+import {Component} from "../../pom/component/component";
 import { RightSideNavigation } from "./right-side-navigation";
 import { LeftSideNavigation } from "./left-side-navigation"
 
-export class Header {
-  constructor(readonly page: Page) {
-    this.page = page;
-  }
-
+export class Header extends Component {
   private LOCATORS = {
-    logoAdmin : this.page.locator('//img[@class="admin"]'),     
-    logoCompany : this.page.locator('//img[@class="logo"]'),    
-    tagline : this.page.locator('//p[text()="Experience the difference"]')
+    header: this.locator,
+    logoAdmin : this.locator.locator('//img[@class="admin"]'),
+    logoCompany : this.locator.locator('//img[@class="logo"]'),
+    tagline : this.locator.locator('//p[text()="Experience the difference"]')
   }
 
   RightSideNavigation = new RightSideNavigation(this.page);

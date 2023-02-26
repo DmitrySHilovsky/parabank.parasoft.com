@@ -1,36 +1,34 @@
-import type { Page } from "@playwright/test";
-import { timeout } from "../../../support/utils";
+import { Component } from "../../pom/component/component";
 
 type TypeAttributeName = "username" | "password";
 
-export class Login {
-  constructor(readonly page: Page) {
-    this.page = page;
-  }
+export class Login extends Component {
+  private userData = this.readUserData();
 
   private LOCATORS = {
+    login: this.locator,
     input: (attributeName: TypeAttributeName) =>
-      this.page.locator(`//input[@name='${attributeName}']`),
-    buttonLogIn: this.page.locator(
+      this.locator.locator(`//input[@name='${attributeName}']`),
+    buttonLogIn: this.locator.locator(
       '//input[@type="submit" and @value="Log In"]'
     ),
-    linkRegistration: this.page.locator(
+    linkRegistration: this.locator.locator(
       '//div[@id="loginPanel"]//a[text()="Forgot login info?"]'
-    ), // используем атрибут в xpath  альтернатива //div[contains(@id, "body")]/div[h2]
-    linkRecovery: this.page.locator('//a[text()="Forgot login info?"]'),
+    ),
+    linkRecovery: this.locator.locator('//a[text()="Forgot login info?"]'),
     errorMessage: this.page.locator('//div[@id="rightPanel"]/p[@class="error"]'),
   };
 
   public async clickButtonLogIn(): Promise<void> {
-    await Promise.all([
-      this.LOCATORS.buttonLogIn.click(),
-      this.page.waitForLoadState("networkidle"),
+     await Promise.all([
+    this.LOCATORS.buttonLogIn.click(),
+    this.page.waitForLoadState("networkidle"),
     ]);
   }
 
   public async fillFormValid(): Promise<void> {
-    await this.LOCATORS.input("username").fill("testability");
-    await this.LOCATORS.input("password").fill("Limanv12");
+    await this.LOCATORS.input("username").fill(this.userData.name);
+    await this.LOCATORS.input("password").fill(this.userData.password);
   }
 
   public async fillFormNotValid(): Promise<void> {
@@ -40,6 +38,14 @@ export class Login {
 
   public async getErrorMessage(): Promise<string> {
     return (await this.LOCATORS.errorMessage.innerText()).trim();
+  }
+
+  // Чтение данных из файла json
+  public readUserData() {
+    const fs = require('fs');
+    let rawData = fs.readFileSync('data.json');
+    let data = JSON.parse(rawData);
+    return data;
   }
 }
 

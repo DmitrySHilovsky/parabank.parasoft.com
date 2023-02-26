@@ -20,6 +20,8 @@ test.describe(`Metadata details on main page`, async () => {
   // Сверяем тайтл с ожидаемым
   test("Page title should be correctly", async () => {
     const title = await mainPage.getTitle();
+    await mainPage.Header.clickLogoCompany();
+    await mainPage.Header.clickLogoAdmin();
     
     expect(title).toBe("ParaBank | Welcome | Online Banking");
   });

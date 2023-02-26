@@ -1,4 +1,3 @@
-// ?? Нейминг и локализация
 import { Page } from "@playwright/test";
 
 // Названия кнопок - необходимо для Xpath
@@ -20,7 +19,7 @@ export class AccountServices {
   private LOCATORS = {
     button: (text: TypeButton) => this.page.locator(`//a[text()="${text}"]`), // Кнопки в менюшке слева
     welcomeTitle: this.page.locator('//div[@id="leftPanel"]//b["Welcome"]'),  // Приветственный текст в менюшке слева над кнопками
-  };
+  }
 
   // Клик на кнопку LogIn
   public async clickButton(typeButton: TypeButton): Promise<void> {

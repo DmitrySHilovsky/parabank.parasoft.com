@@ -12,20 +12,18 @@ test.use({ viewport: { width: 1920, height: 1080 } });
 // Негативные: невалидный логин и пароль, ЗАДАЧА разделить кейсы на две части
 test.describe(`Testing the entry positive and negative scenario`, async () => {
   let mainPage: MainPage;
-  let login: Login;
   let accountServices: AccountServices;
 
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
     mainPage = new MainPage(page);
     await mainPage.visitPage();
-    login = new Login(page);
     accountServices = new AccountServices(page);
   });
 
   test("Login with valid credentials and logout", async () => {
-    await login.fillFormValid();    //Заполняем форму валидными данными
-    await login.clickButtonLogIn(); //Нажимаем кнопку входа, дожидаемся загрузки страницы
+    await mainPage.LeftPanel.login.fillFormValid();    //Заполняем форму валидными данными
+    await mainPage.LeftPanel.login.clickButtonLogIn(); //Нажимаем кнопку входа, дожидаемся загрузки страницы
 
     // определяем что welcomeTitle виден
     expect((await accountServices.isVisibleWelcomeTitle())).toBe(true);
@@ -36,10 +34,10 @@ test.describe(`Testing the entry positive and negative scenario`, async () => {
   });
   // ЗАДАЧА Разделить на два кейса неправильный логин и неправильный пас
   test("Login with incorrect login and correct password", async () => { 
-    await login.fillFormNotValid();
-    await login.clickButtonLogIn();
+    await mainPage.LeftPanel.login.fillFormNotValid();
+    await mainPage.LeftPanel.login.clickButtonLogIn();
 
     // проверка текст ошибки ЗАДАЧА необходимо все ошибки занести в константы
-    expect((await login.getErrorMessage())).toBe(ERRORS.INVALID_AUTH);
+    expect((await mainPage.LeftPanel.login.getErrorMessage())).toBe(ERRORS.INVALID_AUTH);
   });
 });
